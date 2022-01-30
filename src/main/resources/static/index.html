@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Timer</title>
+    <script language="JavaScript">
+        function init() {
+            setInterval("refresh()", 1000);
+        }
+        function refresh() {
+            let req = new XMLHttpRequest();
+            req.open("GET", "/timer/all");
+            req.responseType = 'json';
+            req.send();
+
+            req.onload = function() {
+                let res = req.response;
+                if (req.status === 200) {
+                    document.getElementById('text_year').innerHTML = res.year;
+                    document.getElementById('text_month').innerHTML = res.month;
+                    document.getElementById('text_day').innerHTML = res.day;
+                    document.getElementById('text_hour').innerHTML = res.hour;
+                    document.getElementById('text_minute').innerHTML = res.minute;
+                    document.getElementById('text_second').innerHTML = res.second;
+                } else {
+                    alert(req.status);
+                }
+            };
+        }
+    </script>
+</head>
+<body onLoad="init()">
+    <table border="1" style="border: 1px solid">
+        <thead>
+            <tr>
+                <th>年</th>
+                <th>月</th>
+                <th>日</th>
+                <th>時</th>
+                <th>分</th>
+                <th>秒</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><div id="text_year"></div></td>
+                <td><div id="text_month"></div></td>
+                <td><div id="text_day"></div></td>
+                <td><div id="text_hour"></div></td>
+                <td><div id="text_minute"></div></td>
+                <td><div id="text_second"></div></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
